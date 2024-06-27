@@ -3,22 +3,19 @@ package hiber;
 import hiber.config.AppConfig;
 import hiber.model.Car;
 import hiber.model.User;
-import hiber.service.CarService;
 import hiber.service.UserService;
 import hiber.util.SeriesGenerator;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
 public class MainApp {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
         UserService userService = context.getBean(UserService.class);
-        CarService carService = context.getBean(CarService.class);
 
         Car car = new Car("X1", SeriesGenerator.generate());
         Car car2 = new Car("X2", SeriesGenerator.generate());
@@ -45,8 +42,6 @@ public class MainApp {
         }
 
         System.out.println(userService.getUserById(1L) + "\n");
-
-        carService.listCars().forEach(System.out::println);
 
         System.out.println("\n" + userService.getUserByCarModelAndSeries(car5.getModel(), car5.getSeries()));
 
